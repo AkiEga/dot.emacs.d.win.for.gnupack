@@ -1,0 +1,60 @@
+(modify-frame-parameters nil '((wait-for-wm . nil)))
+(setq debug-on-error t)
+;; load-pathの設定
+; ~/.elisp を load-path の先頭に加える
+(let ((default-directory (expand-file-name "~/.emacs.d/elisp")))
+ (add-to-list 'load-path default-directory)
+ (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+     (normal-top-level-add-subdirs-to-load-path)))
+;idle-require（ファイルロードを起動時に一気にしないようにする)
+(require 'idle-require)
+(idle-require-mode 1)
+
+;文字コードをutf-8
+(set-keyboard-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(setq buffer-file-coding-system 'utf-8)
+;; 日本語をデフォルトにする。
+(set-language-environment "japanese")
+
+;;キーバインドの設定
+(load-file "~/.emacs.d/my_settings/keybind_setting.el")
+;; マウス設定
+(load-file "~/.emacs.d/my_settings/mouse_setting.el")
+;; 日本語設定
+(load-file "~/.emacs.d/my_settings/jp_setting.el")
+
+;;undo-tree
+(require 'undo-tree)
+(global-undo-tree-mode)
+(put 'upcase-region 'disabled nil)
+;; auto-async-byte-compile mode
+(require 'auto-async-byte-compile)
+(setq auto-async-byte-compile-exclude-files-regexp "/junk/")
+(add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
+;; instal-elisp
+(require 'install-elisp)
+(setq install-elisp-repository-directory "~/.emacs.d/elisp")
+;; auto-instal-elisp
+(require 'auto-install)
+
+; darkroom-mode
+(require 'darkroom-mode)
+
+
+;;自動保存の設定を切る
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(put 'set-goal-column 'disabled nil)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
